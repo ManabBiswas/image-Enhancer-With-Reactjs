@@ -4,7 +4,7 @@ import { Sparkles } from 'lucide-react'; // or wherever it's sourced
 const Navbar = () => {
   return (
     <motion.nav 
-      className="fixed top-0 w-full bg-white/10 backdrop-blur-md border-b border-white/20 z-50"
+      className="fixed top-0 w-full bg-gray-400/10 backdrop-blur-md border-b border-white/20 z-50"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8 }}
@@ -16,7 +16,7 @@ const Navbar = () => {
             whileHover={{ scale: 1.05 }}
           >
             <Sparkles className="h-8 w-8 text-yellow-400" />
-            <h1 className="text-2xl font-bold text-white">AI Enhancer</h1>
+            <h1 className="text-2xl font-bold text-white ">AI Enhancer</h1>
           </motion.div>
           <div className="flex items-center space-x-6">
             <motion.a 

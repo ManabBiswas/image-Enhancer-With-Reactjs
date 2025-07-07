@@ -1,23 +1,31 @@
-import React from 'react'
+import React from 'react';
 import { motion } from 'framer-motion';
 import { X, Sparkles, Zap, ImageIcon, Download } from 'lucide-react';
 
-const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, onDownload, onClear }) => {
+const ImagePreview = ({
+  originalImage,
+  enhancedImage,
+  isProcessing,
+  onEnhance,
+  onDownload,
+  onClear,
+}) => {
   if (!originalImage) return null;
 
   return (
     <motion.div
-      className="w-full max-w-4xl mx-auto mt-8"
+      className="w-full max-w-5xl mx-auto mt-8"
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
       <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-white">Image Preview</h2>
           <motion.button
             onClick={onClear}
-            className="p-2 text-gray-400 hover:text-white transition-colors"
+            className="p-2 text-gray-400 hover:text-red-500 transition-colors"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
@@ -25,8 +33,9 @@ const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, o
           </motion.button>
         </div>
 
+        {/* Image Columns */}
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Original Image */}
+          {/* Original */}
           <motion.div
             className="space-y-4"
             initial={{ x: -50, opacity: 0 }}
@@ -37,16 +46,16 @@ const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, o
               <ImageIcon className="h-5 w-5 mr-2" />
               Original
             </h3>
-            <div className="relative overflow-hidden rounded-lg">
+            <div className="relative h-72 bg-gray-400/20 backdrop-blur-2xl rounded-2xl flex items-center justify-center overflow-hidden">
               <img
                 src={originalImage}
                 alt="Original"
-                className="w-full h-64 object-cover"
+                className="max-w-full max-h-full object-contain shadow-2xl"
               />
             </div>
           </motion.div>
 
-          {/* Enhanced Image */}
+          {/* Enhanced */}
           <motion.div
             className="space-y-4"
             initial={{ x: 50, opacity: 0 }}
@@ -57,7 +66,7 @@ const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, o
               <Sparkles className="h-5 w-5 mr-2" />
               Enhanced
             </h3>
-            <div className="relative overflow-hidden rounded-lg bg-gray-800/50 flex items-center justify-center h-64">
+            <div className="relative h-72 bg-gray-400/20 backdrop-blur-2xl rounded-2xl flex items-center justify-center overflow-hidden">
               {isProcessing ? (
                 <motion.div
                   className="flex flex-col items-center"
@@ -67,7 +76,7 @@ const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, o
                   <motion.div
                     className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full"
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                   />
                   <p className="text-white mt-4">Enhancing...</p>
                 </motion.div>
@@ -75,7 +84,7 @@ const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, o
                 <motion.img
                   src={enhancedImage}
                   alt="Enhanced"
-                  className="w-full h-full object-cover"
+                  className="max-w-full max-h-full object-contain"
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.6 }}
@@ -90,7 +99,7 @@ const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, o
           </motion.div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Actions */}
         <motion.div
           className="flex flex-wrap gap-4 mt-6 justify-center"
           initial={{ opacity: 0, y: 20 }}
@@ -109,7 +118,7 @@ const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, o
                 <motion.div
                   className="w-4 h-4 border-2 border-white border-t-transparent rounded-full mr-2"
                   animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                 />
                 Processing...
               </>
@@ -141,4 +150,4 @@ const ImagePreview = ({ originalImage, enhancedImage, isProcessing, onEnhance, o
   );
 };
 
-export default ImagePreview
+export default ImagePreview;

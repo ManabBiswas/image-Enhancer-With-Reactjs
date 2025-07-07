@@ -1,8 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { enhancedImageAPI } from "../utils/enhanceImageApi";
 import { Upload, ImageIcon } from 'lucide-react'; // Adjust based on your icon library
 const ImageUpload = ({ onImageUpload, isProcessing }) => {
   const [dragOver, setDragOver] = useState(false);
+  const [enhancedImage, setEnhancedImage] = useState(null);
+
   const fileInputRef = useRef(null);
 
   const handleDragOver = (e) => {
@@ -24,13 +27,21 @@ const ImageUpload = ({ onImageUpload, isProcessing }) => {
     }
   };
 
-  const handleFileUpload = (file) => {
+  const handleFileUpload = async (file) => {
     if (file && file.type.startsWith('image/')) {
       const reader = new FileReader();
       reader.onload = (e) => {
         onImageUpload(e.target.result);
       };
       reader.readAsDataURL(file);
+      try {
+        const enhancedURL = await enhancedImageAPI(file);
+        setEnhancedImage(enhancedURL);
+        setloading(false);
+      } catch (error) {
+        console.log(error);
+        alert("Error while enhancing the image. Please try again later.");
+      }
     }
   };
 
@@ -46,11 +57,10 @@ const ImageUpload = ({ onImageUpload, isProcessing }) => {
       transition={{ duration: 0.6 }}
     >
       <motion.div
-        className={`relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${
-          dragOver 
-            ? 'border-blue-400 bg-blue-50/10' 
+        className={`relative border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all ${dragOver
+            ? 'border-blue-400 bg-blue-50/10'
             : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50/5'
-        } ${isProcessing ? 'pointer-events-none opacity-50' : ''}`}
+          } ${isProcessing ? 'pointer-events-none opacity-50' : ''}`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
@@ -65,21 +75,21 @@ const ImageUpload = ({ onImageUpload, isProcessing }) => {
           onChange={(e) => e.target.files[0] && handleFileUpload(e.target.files[0])}
           className="hidden"
         />
-        
+
         <motion.div
           animate={dragOver ? { scale: 1.1 } : { scale: 1 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
           <Upload className="h-12 w-12 mx-auto mb-4 text-gray-400" />
         </motion.div>
-        
+
         <h3 className="text-lg font-semibold text-gray-700 mb-2">
           Drop your image here
         </h3>
         <p className="text-gray-500 mb-4">
           or click to browse files
         </p>
-        
+
         <motion.div
           className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg font-medium"
           whileHover={{ scale: 1.05 }}
