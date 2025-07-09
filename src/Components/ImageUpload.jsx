@@ -26,9 +26,16 @@ const ImageUpload = ({ onImageUpload, isProcessing, error }) => {
 
   const handleFileUpload = (file) => {
     if (file && file.type.startsWith('image/')) {
+      // Check file size (10MB limit)
+      if (file.size > 10 * 1024 * 1024) {
+        alert('File size too large. Please choose an image smaller than 10MB.');
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (e) => {
-        onImageUpload(e.target.result);
+        // Pass both the data URL and the file object
+        onImageUpload(e.target.result, file);
       };
       reader.readAsDataURL(file);
     } else {
