@@ -24,8 +24,8 @@ const Navbar = () => {
               About
             </a>
             <button 
-              className="bg-gradient-to-r from-pink-500 to-purple-500 px-4 py-2 rounded-lg text-white font-medium hover:shadow-lg transition-all hover:scale-105"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              className="bg-gradient-to-r from-pink-500 to-purple-500 px-4 py-2 rounded-lg text-white font-medium hover:shadow-lg transition-all hover:scale-105 cursor-pointer"
+              onClick={() => window.scrollTo({ top: 500, behavior: 'smooth' })}
             >
               Get Started
             </button>
